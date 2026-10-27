@@ -1,0 +1,462 @@
+<!--
+  =============================================================================
+  PORTAL DE SOLICITUD DE VACACIONES - DISTRIBUIDORA HERMANOS CASTRO DEL SUR S.A.
+  -----------------------------------------------------------------------------
+  © 2026 Distribuidora Hermanos Castro del Sur S.A. Todos los derechos reservados.
+  Obra protegida por la Ley sobre Derechos de Autor y Derechos Conexos de Costa
+  Rica (Ley N.° 6683). Queda prohibida la reproducción no autorizada.
+  =============================================================================
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#140526">
+  <title>Solicitud de Vacaciones | Hermanos Castro del Sur S.A.</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    }
+    body {
+      font-family: var(--font-sans);
+      background: radial-gradient(circle at 50% 8%, #2d0852 0%, #150529 55%, #0d021b 100%);
+      min-height: 100vh;
+      color: #1e1b4b;
+      -webkit-font-smoothing: antialiased;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 25px 60px -15px rgba(10, 2, 22, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.12);
+    }
+    .ico {
+      width: 1.15em;
+      height: 1.15em;
+      display: inline-block;
+      vertical-align: -0.15em;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    button, input, select, textarea {
+      transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    button:active {
+      transform: scale(0.98);
+    }
+    input:focus-visible, select:focus-visible, textarea:focus-visible {
+      outline: 2px solid #7c3aed;
+      outline-offset: 2px;
+    }
+    @keyframes brand-float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
+    }
+    .emblem-float {
+      animation: brand-float 5s ease-in-out infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .emblem-float { animation: none !important; }
+    }
+  </style>
+</head>
+<body class="flex flex-col items-center justify-center p-3 sm:p-6 text-slate-800 antialiased selection:bg-purple-200">
+
+  <!-- Contenedor Principal (Optimizado para teléfonos, tablets y navegadores) -->
+  <div class="w-full max-w-md my-auto py-4">
+    
+    <!-- Encabezado Corporativo Púrpura -->
+    <header class="text-center mb-5">
+      <!-- Emblema Circular con Contorno Púrpura Real -->
+      <div class="inline-flex items-center justify-center w-20 h-20 rounded-full border-[3px] border-purple-400/50 p-2.5 mb-2.5 bg-white shadow-xl shadow-purple-950/40 overflow-hidden ring-4 ring-purple-500/20 emblem-float">
+        <img src="logo.jpg" onerror="this.onerror=null; this.src='../logo.jpg';" alt="Logo Oficial Distribuidora Hermanos Castro" class="w-full h-full object-contain rounded-full">
+      </div>
+      
+      <h1 class="text-xl sm:text-2xl font-black text-white tracking-tight leading-snug">
+        Distribuidora Hermanos Castro
+      </h1>
+      <span class="text-xs font-bold text-purple-200 block">del Sur S.A.</span>
+      
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/20 text-purple-200 text-[11px] font-bold tracking-wider uppercase border border-purple-400/30 mt-2.5 shadow-xs">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>Portal de Autoservicio · Vacaciones</span>
+      </div>
+    </header>
+
+    <!-- Tarjeta Principal del Formulario -->
+    <main class="glass-card rounded-3xl p-5 sm:p-7 border border-purple-100/50 relative overflow-hidden">
+      
+      <!-- Barra decorativa superior en gradiente púrpura -->
+      <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-purple-700 via-violet-500 to-purple-700"></div>
+
+      <!-- Estado: Formulario Activo -->
+      <div id="form-container">
+        
+        <div class="pb-3.5 mb-4 border-b border-slate-100">
+          <h2 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+            <svg class="ico text-purple-700" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+            <span>Nueva Solicitud de Vacaciones</span>
+          </h2>
+          <p class="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
+            Complete los datos requeridos para remitir su petición formal al departamento de Recursos Humanos.
+          </p>
+        </div>
+
+        <form id="vacation-form" onsubmit="handleVacationSubmit(event)" class="space-y-4 text-xs">
+          
+          <!-- Cédula -->
+          <div>
+            <label class="block font-bold text-slate-700 mb-1 flex items-center justify-between">
+              <span>Número de Cédula:</span>
+              <span class="text-[10px] font-normal text-slate-400">9 dígitos sin guiones o con formato</span>
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 pointer-events-none">
+                <svg class="ico" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><circle cx="8" cy="12" r="2"/><path d="M14 10h4M14 14h4"/></svg>
+              </span>
+              <input type="text" id="inp-cedula" placeholder="Ej: 1-1234-0567" required
+                class="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-200 bg-white font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-purple-100 focus:border-purple-600 transition shadow-xs text-xs">
+            </div>
+          </div>
+
+          <!-- Nombre Completo -->
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">
+              Nombre Completo:
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 pointer-events-none">
+                <svg class="ico" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              </span>
+              <input type="text" id="inp-nombre" placeholder="Nombre y dos apellidos" required
+                class="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-200 bg-white font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-purple-100 focus:border-purple-600 transition shadow-xs text-xs">
+            </div>
+          </div>
+
+          <!-- Departamento -->
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">
+              Departamento / Área de Trabajo:
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 pointer-events-none">
+                <svg class="ico" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/></svg>
+              </span>
+              <select id="inp-depto" required
+                class="w-full pl-9 pr-8 py-2.5 rounded-xl border border-slate-200 bg-white font-medium text-slate-900 focus:outline-none focus:ring-4 focus:ring-purple-100 focus:border-purple-600 transition shadow-xs text-xs appearance-none cursor-pointer">
+                <option value="Bodega">Bodega y Logística</option>
+                <option value="Distribución">Distribución / Choferes y Rutas</option>
+                <option value="Ventas">Ventas y Comercialización</option>
+                <option value="Administración">Administración, Finanzas y Oficina</option>
+                <option value="Otro">Otro / Servicios Generales</option>
+              </select>
+              <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
+                <svg class="ico" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+              </span>
+            </div>
+          </div>
+
+          <!-- Fechas: Inicio y Fin -->
+          <div class="grid grid-cols-2 gap-2.5">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">
+                Fecha Inicio:
+              </label>
+              <input type="date" id="inp-inicio" required onchange="calculateDaysRequested()"
+                class="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-white font-medium text-slate-900 focus:outline-none focus:ring-4 focus:ring-purple-100 focus:border-purple-600 transition shadow-xs text-xs">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">
+                Fecha Fin:
+              </label>
+              <input type="date" id="inp-fin" required onchange="calculateDaysRequested()"
+                class="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-white font-medium text-slate-900 focus:outline-none focus:ring-4 focus:ring-purple-100 focus:border-purple-600 transition shadow-xs text-xs">
+            </div>
+          </div>
+
+          <!-- Tarjeta Dinámica de Resumen de Días -->
+          <div id="days-summary-card" class="hidden p-3.5 rounded-xl bg-purple-50 border border-purple-200 transition">
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-purple-200 text-purple-800 flex items-center justify-center flex-none">
+                  <svg class="ico" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                </div>
+                <div>
+                  <div class="font-extrabold text-purple-950 text-xs" id="days-count-text">0 días solicitados</div>
+                  <div class="text-[10px] text-purple-700 font-medium" id="return-work-text">Retorno a labores: -</div>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 rounded-full bg-purple-200 text-purple-950 font-bold text-[10px] shadow-2xs">
+                Cálculo Automático
+              </span>
+            </div>
+          </div>
+
+          <!-- Motivo u Observaciones -->
+          <div>
+            <label class="block font-bold text-slate-700 mb-1 flex items-center justify-between">
+              <span>Motivo o Detalle (Opcional):</span>
+              <span class="text-[10px] font-normal text-slate-400">Trámite o descanso</span>
+            </label>
+            <textarea id="inp-motivo" rows="2" placeholder="Indique alguna observación relevante o período acordado..."
+              class="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white font-normal text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-purple-100 focus:border-purple-600 transition shadow-xs text-xs resize-none"></textarea>
+          </div>
+
+          <!-- Confirmación de Jefatura -->
+          <div class="flex items-start gap-2.5 pt-1">
+            <input type="checkbox" id="chk-coordinado" required class="mt-0.5 w-4 h-4 rounded text-purple-600 focus:ring-purple-500 border-slate-300 cursor-pointer">
+            <label for="chk-coordinado" class="text-[11px] text-slate-600 leading-tight cursor-pointer select-none">
+              He coordinado preliminarmente estas fechas con mi jefatura inmediata antes de enviar esta solicitud.
+            </label>
+          </div>
+
+          <!-- Mensaje de Alerta de Validación -->
+          <div id="form-error-alert" class="hidden p-2.5 rounded-xl text-xs font-semibold bg-rose-50 text-rose-800 border border-rose-200"></div>
+
+          <!-- Botón de Envío Corporativo -->
+          <button type="submit" id="btn-submit"
+            class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-purple-700 via-purple-600 to-violet-600 hover:from-purple-800 hover:to-violet-700 active:scale-[0.98] text-white font-extrabold text-xs uppercase tracking-wider shadow-lg shadow-purple-900/25 transition flex items-center justify-center gap-2 mt-2 cursor-pointer">
+            <span id="btn-icon">
+              <svg class="ico" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+            </span>
+            <span id="btn-text">Enviar Solicitud a Recursos Humanos</span>
+          </button>
+        </form>
+
+      </div>
+
+      <!-- Estado: Confirmación Exitosa -->
+      <div id="success-container" class="hidden text-center py-4 space-y-4">
+        <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto text-2xl shadow-inner ring-4 ring-emerald-50">
+          <svg class="ico w-8 h-8" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <div>
+          <span class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold inline-block mb-1.5 font-mono" id="res-codigo">
+            SOL-0000
+          </span>
+          <h3 class="text-base font-extrabold text-slate-900 leading-tight">
+            ¡Solicitud Recibida con Éxito!
+          </h3>
+          <p class="text-xs text-slate-600 mt-1 max-w-xs mx-auto">
+            Su solicitud fue remitida formalmente a Recursos Humanos y registrada en Google Sheets.
+          </p>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-purple-50/60 border border-purple-100 text-left text-xs space-y-1.5">
+          <div class="flex justify-between">
+            <span class="text-slate-500">Colaborador:</span>
+            <span class="font-bold text-slate-900" id="res-nombre">-</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-500">Cédula:</span>
+            <span class="font-bold text-slate-900" id="res-cedula">-</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-500">Período:</span>
+            <span class="font-bold text-slate-900" id="res-fechas">-</span>
+          </div>
+          <div class="flex justify-between border-t border-purple-100 pt-1.5">
+            <span class="text-slate-500">Días solicitados:</span>
+            <span class="font-black text-purple-900" id="res-dias">0 días</span>
+          </div>
+        </div>
+
+        <button type="button" onclick="resetFormForNewRequest()"
+          class="w-full py-2.5 px-4 rounded-xl bg-purple-100 hover:bg-purple-200 text-purple-900 font-bold text-xs transition">
+          Hacer Otra Solicitud
+        </button>
+      </div>
+
+    </main>
+
+    <!-- Pie de Página -->
+    <footer class="text-center mt-5 text-[11px] text-purple-300/80 leading-relaxed">
+      Distribuidora Hermanos Castro del Sur S.A. &copy; 2026<br>
+      <span class="text-purple-400/60 text-[10px]">Sistema Oficial de Recursos Humanos</span>
+
+    </footer>
+
+  </div>
+
+  <!-- Lógica y Control del Portal de Vacaciones -->
+  <script>
+    // URL oficial de Google Apps Script para Vacaciones Hermanos Castro
+    const DEFAULT_VACATION_API_URL = "https://script.google.com/macros/s/AKfycbyv4w0Npve73Z-VTiW7C41bmTvQwJxjRc0R6UQ-SsDajaxh9ZRkx5fHnXUVjkDN5_AsOg/exec";
+    let sheetsApiUrl = DEFAULT_VACATION_API_URL;
+
+    function initConfig() {
+      // 1. Prioridad: parámetro ?api= en la URL (ideal para el QR o APK)
+      const urlParams = new URLSearchParams(window.location.search);
+      const paramApi = urlParams.get("api");
+      if (paramApi) {
+        sheetsApiUrl = decodeURIComponent(paramApi);
+        localStorage.setItem("hc_vacation_sheets_url", sheetsApiUrl);
+      } else {
+        // Exclusivo del backend de vacaciones (Regla de Oro #1: no mezclar con el script principal)
+        sheetsApiUrl = localStorage.getItem("hc_vacation_sheets_url") || DEFAULT_VACATION_API_URL;
+      }
+
+      // Restricción de fecha mínima (a partir de hoy)
+      const todayStr = new Date().toISOString().split("T")[0];
+      const inpInicio = document.getElementById("inp-inicio");
+      const inpFin = document.getElementById("inp-fin");
+      if (inpInicio) inpInicio.min = todayStr;
+      if (inpFin) inpFin.min = todayStr;
+    }
+
+    function calculateDaysRequested() {
+      const inicio = document.getElementById("inp-inicio").value;
+      const fin = document.getElementById("inp-fin").value;
+      const card = document.getElementById("days-summary-card");
+      const textCount = document.getElementById("days-count-text");
+      const textReturn = document.getElementById("return-work-text");
+      const errorBox = document.getElementById("form-error-alert");
+
+      errorBox.className = "hidden";
+
+      if (!inicio || !fin) {
+        card.classList.add("hidden");
+        return;
+      }
+
+      const d1 = new Date(inicio + "T00:00:00");
+      const d2 = new Date(fin + "T00:00:00");
+
+      if (d2 < d1) {
+        errorBox.className = "p-2.5 rounded-xl text-xs font-semibold bg-rose-50 text-rose-800 border border-rose-200 block";
+        errorBox.textContent = "La fecha fin no puede ser anterior a la fecha de inicio.";
+        card.classList.add("hidden");
+        return;
+      }
+
+      const diffTime = Math.abs(d2 - d1);
+      const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+      // Calcular fecha de retorno a labores (día siguiente)
+      const dRetorno = new Date(d2);
+      dRetorno.setDate(dRetorno.getDate() + 1);
+      const retOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const retStr = dRetorno.toLocaleDateString('es-CR', retOptions);
+
+      textCount.textContent = `${days} día${days > 1 ? 's' : ''} natural${days > 1 ? 'es' : ''} de vacaciones`;
+      textReturn.textContent = `Retorno estimado: ${retStr}`;
+      card.classList.remove("hidden");
+    }
+
+    async function handleVacationSubmit(e) {
+      e.preventDefault();
+      const cedula = document.getElementById("inp-cedula").value.trim();
+      const nombre = document.getElementById("inp-nombre").value.trim();
+      const depto = document.getElementById("inp-depto").value;
+      const inicio = document.getElementById("inp-inicio").value;
+      const fin = document.getElementById("inp-fin").value;
+      const motivo = document.getElementById("inp-motivo").value.trim();
+      const errorBox = document.getElementById("form-error-alert");
+
+      const d1 = new Date(inicio + "T00:00:00");
+      const d2 = new Date(fin + "T00:00:00");
+
+      if (d2 < d1) {
+        errorBox.className = "p-2.5 rounded-xl text-xs font-semibold bg-rose-50 text-rose-800 border border-rose-200 block";
+        errorBox.textContent = "La fecha fin no puede ser anterior a la fecha de inicio.";
+        return;
+      }
+
+      const diffTime = Math.abs(d2 - d1);
+      const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+      const codigo = "SOL-" + Math.floor(1000 + Math.random() * 9000);
+      const newId = "req-" + Date.now();
+      const todayIso = new Date().toISOString().split("T")[0];
+
+      const payload = {
+        action: "submitVacationRequest",
+        id: newId,
+        codigo: codigo,
+        fechaSolicitud: todayIso,
+        rawCedula: cedula,
+        rawNombre: nombre,
+        rawDepto: depto,
+        inicio: inicio,
+        fin: fin,
+        dias: days,
+        rawMotivo: motivo,
+        assignedEmployeeId: "",
+        estado: "Pendiente"
+      };
+
+      // Animación de envío
+      const btn = document.getElementById("btn-submit");
+      const btnIcon = document.getElementById("btn-icon");
+      const btnText = document.getElementById("btn-text");
+      btn.disabled = true;
+      btn.classList.add("opacity-75");
+      btnIcon.className = "inline-block animate-spin";
+      btnIcon.innerHTML = '<svg class="ico animate-spin" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>';
+      btnText.textContent = "Enviando solicitud a Google Sheets...";
+
+      try {
+        if (sheetsApiUrl) {
+          await fetch(sheetsApiUrl, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify(payload)
+          });
+        }
+
+        // Guardar respaldo local de solicitudes en el dispositivo
+        const localRequests = JSON.parse(localStorage.getItem("hc_vacation_requests")) || [];
+        localRequests.unshift(payload);
+        localStorage.setItem("hc_vacation_requests", JSON.stringify(localRequests));
+
+        // Mostrar pantalla de confirmación exitosa
+        document.getElementById("form-container").classList.add("hidden");
+        document.getElementById("success-container").classList.remove("hidden");
+        document.getElementById("res-codigo").textContent = codigo;
+        document.getElementById("res-nombre").textContent = nombre;
+        document.getElementById("res-cedula").textContent = cedula;
+        document.getElementById("res-fechas").textContent = `${inicio} al ${fin}`;
+        document.getElementById("res-dias").textContent = `${days} día${days > 1 ? 's' : ''}`;
+
+      } catch (err) {
+        console.warn("Fallo de red al enviar la solicitud:", err);
+        // Respaldo offline
+        const localRequests = JSON.parse(localStorage.getItem("hc_vacation_requests")) || [];
+        localRequests.unshift(payload);
+        localStorage.setItem("hc_vacation_requests", JSON.stringify(localRequests));
+
+        document.getElementById("form-container").classList.add("hidden");
+        document.getElementById("success-container").classList.remove("hidden");
+        document.getElementById("res-codigo").textContent = codigo + " (Guardado Local)";
+        document.getElementById("res-nombre").textContent = nombre;
+        document.getElementById("res-cedula").textContent = cedula;
+        document.getElementById("res-fechas").textContent = `${inicio} al ${fin}`;
+        document.getElementById("res-dias").textContent = `${days} día${days > 1 ? 's' : ''}`;
+      } finally {
+        btn.disabled = false;
+        btn.classList.remove("opacity-75");
+        btnIcon.className = "";
+        btnIcon.innerHTML = '<svg class="ico" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>';
+        btnText.textContent = "Enviar Solicitud a Recursos Humanos";
+      }
+    }
+
+    function resetFormForNewRequest() {
+      document.getElementById("vacation-form").reset();
+      document.getElementById("days-summary-card").classList.add("hidden");
+      document.getElementById("form-error-alert").className = "hidden";
+      document.getElementById("success-container").classList.add("hidden");
+      document.getElementById("form-container").classList.remove("hidden");
+    }
+
+    window.addEventListener("DOMContentLoaded", initConfig);
+  </script>
+</body>
+</html>
