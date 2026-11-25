@@ -264,6 +264,12 @@
             </span>
             <span id="btn-text">Enviar Solicitud a Recursos Humanos</span>
           </button>
+
+          <!-- Indicador de Enlace en Vivo -->
+          <div class="mt-2.5 text-center flex items-center justify-center gap-1.5 text-[11px] text-slate-500 font-medium">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span>Conectado a Hoja Oficial de Vacaciones</span>
+          </div>
         </form>
 
       </div>
@@ -332,8 +338,28 @@
   <!-- Lógica y Control del Portal de Vacaciones -->
   <script>
     // URL oficial de Google Apps Script para Vacaciones Hermanos Castro
-    const DEFAULT_VACATION_API_URL = "";
-    let sheetsApiUrl = localStorage.getItem("hc_vacation_sheets_url") || DEFAULT_VACATION_API_URL;
+    const DEFAULT_VACATION_API_URL = "https://script.google.com/macros/s/AKfycbyv4w0Npve73Z-VTiW7C41bmTvQwJxjRc0R6UQ-SsDajaxh9ZRkx5fHnXUVjkDN5_AsOg/exec";
+
+    function resolveVacationApiUrl() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const paramApi = (urlParams.get("api") || urlParams.get("script") || urlParams.get("url") || "").trim();
+      if (paramApi && paramApi.startsWith("https://script.google.com/")) {
+        localStorage.setItem("hc_vacation_sheets_url", paramApi);
+        return paramApi;
+      }
+
+      const storedVac = (localStorage.getItem("hc_vacation_sheets_url") || "").trim();
+      // Si el valor almacenado es válido y no pertenece al script principal de nómina, conservarlo
+      if (storedVac && storedVac.startsWith("https://script.google.com/") && !storedVac.includes("AKfycbzgx7jb")) {
+        return storedVac;
+      }
+
+      // Regla de Oro: Siempre usar el script exclusivo de vacaciones (nunca contaminar con el script de nómina)
+      localStorage.setItem("hc_vacation_sheets_url", DEFAULT_VACATION_API_URL);
+      return DEFAULT_VACATION_API_URL;
+    }
+
+    let sheetsApiUrl = resolveVacationApiUrl();
 
     // Retorna la fecha local en formato YYYY-MM-DD (evita desfase UTC de Costa Rica tras las 18:00)
     function getLocalDateString() {
@@ -346,6 +372,9 @@
 
     // Sincronización automática de solicitudes almacenadas durante pérdidas de conexión
     async function syncOfflineVacationRequests() {
+      const targetUrl = resolveVacationApiUrl();
+      if (!targetUrl) return;
+
       const stored = localStorage.getItem("hc_vacation_requests");
       if (!stored) return;
       try {
@@ -356,7 +385,7 @@
 
         for (const item of pendingList) {
           try {
-            await fetch(sheetsApiUrl, {
+            await fetch(targetUrl, {
               method: "POST",
               mode: "no-cors",
               headers: { "Content-Type": "text/plain;charset=utf-8" },
@@ -373,16 +402,7 @@
     }
 
     function initConfig() {
-      // 1. Prioridad: parámetro ?api= en la URL (ideal para el QR o APK)
-      const urlParams = new URLSearchParams(window.location.search);
-      const paramApi = urlParams.get("api");
-      if (paramApi) {
-        sheetsApiUrl = decodeURIComponent(paramApi);
-        localStorage.setItem("hc_vacation_sheets_url", sheetsApiUrl);
-      } else {
-        // Exclusivo del backend de vacaciones (Regla de Oro #1: no mezclar con el script principal)
-        sheetsApiUrl = localStorage.getItem("hc_vacation_sheets_url") || DEFAULT_VACATION_API_URL;
-      }
+      sheetsApiUrl = resolveVacationApiUrl();
 
       // Restricción de fecha mínima local (a partir de hoy en hora de Costa Rica)
       const todayStr = getLocalDateString();
@@ -579,6 +599,10 @@
         return;
       }
 
+      // Regla de Oro: Enlazar SIEMPRE directamente al Apps Script exclusivo de Vacaciones
+      sheetsApiUrl = resolveVacationApiUrl();
+      console.log("Enviando solicitud al script oficial de vacaciones:", sheetsApiUrl);
+
       const codigo = "SOL-" + Math.floor(1000 + Math.random() * 9000);
       const newId = "req-" + Date.now();
       const todayIso = getLocalDateString();
@@ -589,16 +613,22 @@
         codigo: codigo,
         fechaSolicitud: todayIso,
         rawCedula: cedula,
+        cedula: cedula,
         rawNombre: nombre,
+        nombre: nombre,
         rawDepto: depto,
+        departamento: depto,
         modalidad: currentModalidad,
         inicio: calc.inicio,
+        fechaInicio: calc.inicio,
         fin: calc.fin,
+        fechaFin: calc.fin,
         dias: calc.dias,
         diasNaturales: calc.diasNaturales,
         retornoLabores: calc.retornoStr,
         fechaRetorno: calc.retornoIso,
         rawMotivo: motivo,
+        motivo: motivo,
         assignedEmployeeId: "",
         estado: "Pendiente",
         _offlinePending: false
